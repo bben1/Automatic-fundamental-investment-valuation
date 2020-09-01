@@ -20,6 +20,68 @@ I decided to format both of the tools as classes because for the following reaso
 
 -	Easily add/alter functionality of each object.
 
+## Description:
+
+**A DCF (Discounted-Cash-Flow)** calculates the intrinsic value of a company. It sums the present values of the FCF (Free-Cash-Flow) and the TV (Terminal-Value) to calculate the EV (Enterprise-Value), before making necessary adjustments to reach the implied equity value. Below are the steps based on the research that I have conducted:
+
+-	Define the driving factors and estimate their growth throughout a forecasting period.
+
+-	Calculate the WACC (Weighted-Average-Cost-of-Capital):
+
+    o	Use the interest-coverage ratio method to calculate the cost-of-debt.
+    
+    o	Use the CAPM model to calculate the cost of equity.
+    
+    o	Use US-treasury bonds to calculate the risk-free-rate (if company in the US).
+   
+    o	Use the index of the company to calculate the expected market return.
+    
+-	Calculate the FCF for each year and discount back to the present value, using the WACC (Weighted-Average-Cost-of-Capital).
+
+-	Sum each of the present values for the FCF during the forecast period.
+
+-	Calculate the TV (Terminal-Value) of the company using the perpetual-growth-method and then convert to present value by discounting it by WACC for the forecast period.
+
+    o	Use the ____ to calculate g (Perpetual-Growth-Rate).
+    
+-	Calculate the EV (Enterprise-Value) of the company by summing the net present values of the FCF and TV.
+
+-	To calculate the implied equity value from the Enterprise-Value:
+
+    o	Add cash or cash-equivalents
+    
+    o	Subtract debt
+    
+-	To calculate the implied price-per-share, divide the equity value by the number of outstanding shares.
+
+-	To make our analysis more useful, we then conduct sensitivity analysis on the arguments WACC, g. This then produces a range for the intrinsic value per share of the company.
+
+**Piotroski’s F-Score** is a number between 0 and 9 which is used to asses the strength of a company’s financial position. It analyses different aspects such as the profitability, liquidity, leverage and operational efficiency of the company. The specific conditions of Piotroski’s F-Score are as follows:
+
+#### Profitability 
+
+    1.	Return on Assets (1 point if it is positive in the current year, 0 otherwise);
+    
+    2.	Operating Cash Flow (1 point if it is positive in the current year, 0 otherwise);
+    
+    3.	Change in Return of Assets (ROA) (1 point if ROA is higher in the current year compared to the previous one, 0 otherwise);
+    
+    4.	Accruals (1 point if Operating Cash Flow/Total Assets is higher than ROA in the current year, 0 otherwise);
+    
+#### Leverage, Liquidity and Source of Funds
+
+    5.	Change in Leverage (long-term) ratio (1 point if the ratio is lower this year compared to the previous one, 0 otherwise);
+    
+    6.	Change in Current ratio (1 point if it is higher in the current year compared to the previous one, 0 otherwise);
+    
+    7.	Change in the number of shares (1 point if no new shares were issued during the last year);
+    
+#### Operating Efficiency
+
+    8.	Change in Gross Margin (1 point if it is higher in the current year compared to the previous one, 0 otherwise);
+
+    9.	Change in Asset Turnover ratio (1 point if it is higher in the current year compared to the previous one, 0 otherwise);
+
 ## Example:
 
 If we want to conduct a **DCF analysis** of Google (GOOG) using this project, we would perform the following steps:
@@ -95,72 +157,6 @@ If we want to conduct a **Piotroski F-score analysis** of Google (GOOG) using th
     - Run the .f_score() method:
     
         - This returns a summary of the analysis as well as the company's f-score.
-
-  
-    
- 
-
-## Description:
-
-**A DCF (Discounted-Cash-Flow)** calculates the intrinsic value of a company. It sums the present values of the FCF (Free-Cash-Flow) and the TV (Terminal-Value) to calculate the EV (Enterprise-Value), before making necessary adjustments to reach the implied equity value. Below are the steps based on the research that I have conducted:
-
--	Define the driving factors and estimate their growth throughout a forecasting period.
-
--	Calculate the WACC (Weighted-Average-Cost-of-Capital):
-
-    o	Use the interest-coverage ratio method to calculate the cost-of-debt.
-    
-    o	Use the CAPM model to calculate the cost of equity.
-    
-    o	Use US-treasury bonds to calculate the risk-free-rate (if company in the US).
-   
-    o	Use the index of the company to calculate the expected market return.
-    
--	Calculate the FCF for each year and discount back to the present value, using the WACC (Weighted-Average-Cost-of-Capital).
-
--	Sum each of the present values for the FCF during the forecast period.
-
--	Calculate the TV (Terminal-Value) of the company using the perpetual-growth-method and then convert to present value by discounting it by WACC for the forecast period.
-
-    o	Use the ____ to calculate g (Perpetual-Growth-Rate).
-    
--	Calculate the EV (Enterprise-Value) of the company by summing the net present values of the FCF and TV.
-
--	To calculate the implied equity value from the Enterprise-Value:
-
-    o	Add cash or cash-equivalents
-    
-    o	Subtract debt
-    
--	To calculate the implied price-per-share, divide the equity value by the number of outstanding shares.
-
--	To make our analysis more useful, we then conduct sensitivity analysis on the arguments WACC, g. This then produces a range for the intrinsic value per share of the company.
-
-**Piotroski’s F-Score** is a number between 0 and 9 which is used to asses the strength of a company’s financial position. It analyses different aspects such as the profitability, liquidity, leverage and operational efficiency of the company. The specific conditions of Piotroski’s F-Score are as follows:
-
-#### Profitability 
-
-    1.	Return on Assets (1 point if it is positive in the current year, 0 otherwise);
-    
-    2.	Operating Cash Flow (1 point if it is positive in the current year, 0 otherwise);
-    
-    3.	Change in Return of Assets (ROA) (1 point if ROA is higher in the current year compared to the previous one, 0 otherwise);
-    
-    4.	Accruals (1 point if Operating Cash Flow/Total Assets is higher than ROA in the current year, 0 otherwise);
-    
-#### Leverage, Liquidity and Source of Funds
-
-    5.	Change in Leverage (long-term) ratio (1 point if the ratio is lower this year compared to the previous one, 0 otherwise);
-    
-    6.	Change in Current ratio (1 point if it is higher in the current year compared to the previous one, 0 otherwise);
-    
-    7.	Change in the number of shares (1 point if no new shares were issued during the last year);
-    
-#### Operating Efficiency
-
-    8.	Change in Gross Margin (1 point if it is higher in the current year compared to the previous one, 0 otherwise);
-
-    9.	Change in Asset Turnover ratio (1 point if it is higher in the current year compared to the previous one, 0 otherwise);
 
 ## Challenges:
 
