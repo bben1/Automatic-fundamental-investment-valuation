@@ -81,6 +81,22 @@ I decided to format both of the tools as classes because for the following reaso
     8.	Change in Gross Margin (1 point if it is higher in the current year compared to the previous one, 0 otherwise);
 
     9.	Change in Asset Turnover ratio (1 point if it is higher in the current year compared to the previous one, 0 otherwise);
+    
+## Dependencies
+
+PIP install
+
+requests
+
+pandas
+
+pandas_datareader
+
+numpy
+
+seaborn
+
+matplotlib
 
 ## Example:
 
