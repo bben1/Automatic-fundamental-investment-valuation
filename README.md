@@ -3,7 +3,8 @@
 ## Project summary:
 
 A DCF tool that automatically performs the DCF calculation and sensitivity analysis for a company. A Piotroski tool that automatically assigns an F1-Score to a company. All financial data collected via the financialmodelingprep API.
-Motivations/Intentions:
+
+## Motivations/Intentions:
 
 I have two main motivations behind this project:
 
