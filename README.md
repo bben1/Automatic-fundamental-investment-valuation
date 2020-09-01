@@ -1,5 +1,7 @@
 # AutomaticFundamentalsAnalysis
 
+#### This project is for educational purposes and should not be used to guide any financial decisions.
+
 ## Project summary:
 
 A DCF tool that automatically performs the DCF calculation and sensitivity analysis for a company. A Piotroski tool that automatically assigns an F1-Score to a company. All financial data collected via the financialmodelingprep API.
@@ -21,6 +23,8 @@ I decided to format both of the tools as classes because for the following reaso
 -	Easily add/alter functionality of each object.
 
 ## Description:
+
+To use this project you will need to make a financialmodelingprep account in order to access their financial data stores. Documentation can be found here: https://financialmodelingprep.com/developer/docs/ 
 
 **A DCF (Discounted-Cash-Flow)** calculates the intrinsic value of a company. It sums the present values of the FCF (Free-Cash-Flow) and the TV (Terminal-Value) to calculate the EV (Enterprise-Value), before making necessary adjustments to reach the implied equity value. Below are the steps based on the research that I have conducted:
 
@@ -84,19 +88,19 @@ I decided to format both of the tools as classes because for the following reaso
     
 ## Dependencies
 
-PIP install
+- requests
 
-requests
+- pandas
 
-pandas
+- pandas_datareader
 
-pandas_datareader
+- numpy
 
-numpy
+- seaborn
 
-seaborn
+- matplotlib
 
-matplotlib
+- financialmodelingprep
 
 ## Example:
 
@@ -185,4 +189,12 @@ If we want to conduct a **Piotroski F-score analysis** of Google (GOOG) using th
 ## Conclusion:
 
 Having learned more about the fundamental analysis process and its technological implementations, I realise that although there are a lot of calculations that can be automated, saving time. Nevertheless, there are significant challenges presented when trying to automate the human aspect of company valuation (pricing/assumptions).
+
+## Sources:
+
+  https://corporatefinanceinstitute.com/resources/templates/excel-modeling/stable-growth-vs-2-stage-valuation-model/
+  
+  https://en.wikipedia.org/wiki/Piotroski_F-score#:~:text=Piotroski%20F%2Dscore%20is%20a,Stanford%20accounting%20professor%20Joseph%20Piotroski.
+  
+  
 
