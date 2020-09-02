@@ -1,4 +1,3 @@
-from keys.secrets import *
 from data.get_statements import get_statement
 from tools.piotroski_class import Piotroski
 
@@ -24,12 +23,12 @@ def main():
     
     #instantiate the class
     f1 = Piotroski(income_statement = inc,
-               balance_sheet = bs,
-               cash_flow_statement = cf,
-               financial_ratios = fr)
+                   balance_sheet = bs,
+                   cash_flow_statement = cf,
+                   financial_ratios = fr)
     
     #perform the analysis
-    return f1.f1_score()
+    return f1.f_score()
 
 if __name__ == '__main__':
     main()
