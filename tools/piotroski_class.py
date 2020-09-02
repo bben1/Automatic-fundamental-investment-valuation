@@ -1,15 +1,31 @@
 import numpy as np
 
 class Piotroski:
+    """
+    Summary:
+    Stores the financial statements of a company and calculates Piotroski's f-score.
     
+    Inputs:
+    income_statement -- (json)
+    balance_sheet -- (json)
+    cash_flow_statement -- (json)
+    financial_ratios -- (json)
+    
+    """
     def __init__(self, income_statement, balance_sheet, cash_flow_statement, financial_ratios):
         self.fr = financial_ratios
         self.inc = income_statement
         self.bs = balance_sheet
         self.cf = cash_flow_statement
         
-    def f1_score(self):
+    def f_score(self):
+        """
+        Summary: Calculates f1-score based on 9 financial conditions.
         
+        Returns:
+        dict containing the results.
+        
+        """
         f1_score = 0
         profitability_score = 0
         leverage_liquidity_score = 0
