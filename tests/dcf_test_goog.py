@@ -53,7 +53,11 @@ def main():
                              cap_ex_growth_rate = 0.2,
                              perpetual_growth_rate = 0.02)
     
-    return dcf.get_equity_value()
+    # Iinitial calculation to get implied share price
+    dcf.get_equity_value()
+    
+    #Finish by performing sensitivity analysis on the results
+    return dcf.sensitivity(confidence_intervals = [0.95, 0.9, 0.85, 0.8, 0.75, 0.7], bound = 0.3)
 
 if __name__ == '__main__':
     main()
