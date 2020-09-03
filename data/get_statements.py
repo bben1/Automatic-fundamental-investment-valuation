@@ -1,6 +1,3 @@
-import requests
-import pandas as pd
-
 def get_statement(company_ticker, statement_name, api_key, frequency='annual', df = False):
     """
     Get a financial statement to use for fundamental calculations
