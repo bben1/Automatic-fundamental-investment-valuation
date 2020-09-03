@@ -268,17 +268,23 @@ class DCF:
         Summary of sensitivity analysis
         Plots demonstrating the distribution of implied share prices
         """
-        #Define a range for the WACC
-        wacc_lower_bound = self.wacc*(round(1-bound,2))
-        wacc_upper_bound = self.wacc*(round(1+bound,2))
-        wacc_step = self.wacc/100    
-        wacc_range = np.arange(wacc_lower_bound, wacc_upper_bound, wacc_step)
+        #Ensure that the bound is in the desired range.
+        if (0 < bound < 1):
+            #Define a range for the WACC
+            wacc_lower_bound = self.wacc*(round(1-bound,4))
+            wacc_upper_bound = self.wacc*(round(1+bound,4))
+            wacc_step = self.wacc/100    
+            wacc_range = np.arange(wacc_lower_bound, wacc_upper_bound, wacc_step)
+
+            #Define a range for the long-term growth rate
+            g_lower_bound = self.g*(round(1-bound,4))
+            g_upper_bound = self.g*(round(1+bound,4))
+            g_step = self.g/100
+            g_range = np.arange(g_lower_bound, g_upper_bound, g_step)
         
-        #Define a range for the long-term growth rate
-        g_lower_bound = self.g*(0.6)
-        g_upper_bound = self.g*(1.4) 
-        g_step = self.g/100
-        g_range = np.arange(g_lower_bound, g_upper_bound, g_step)
+        else:
+            print("Ensure that 0 < bound < 1 ")
+            return
         
         #Create a function that calculates the implied share price for each wacc, g combination
         def implied_share_price(wacc, g):
@@ -313,18 +319,25 @@ class DCF:
         print(f"Median: ${round(ev_df['Implied share price'].median(),2)}\n")
         
         #For each confidence interval, calculate a range of implied share price
+        #Ensure that each confidence interval is within the desired range.
         for i in confidence_intervals:
             
-            significance_level = (1-i)/2
+            if (0 < i < 1):
+                #define bounds for the range of values
+                significance_level = (1-i)/2
+
+                lower_bound = round(significance_level,4)
+                lower_price = ev_df['Implied share price'].quantile(lower_bound)
+
+                upper_bound = round(1-significance_level,4)
+                upper_price = ev_df['Implied share price'].quantile(upper_bound)
+                #print the results
+                print(f"At confidence level {i}:")
+                print(f"Intrinsic share price range: ${round(lower_price,4)} : ${round(upper_price,4)}\n")
             
-            lower_bound = round(significance_level,4)
-            lower_price = ev_df['Implied share price'].quantile(lower_bound)
-        
-            upper_bound = round(1-significance_level,4)
-            upper_price = ev_df['Implied share price'].quantile(upper_bound)
-            
-            print(f"At confidence level {i}:")
-            print(f"Intrinsic share price range: ${round(lower_price,4)} : ${round(upper_price,4)}\n")
+            else:
+                print("Ensure that for i in confidence_intervals: 0 < i < 1")
+                return
         
         print("***********************************************\n")
         #plot the results with a distplot and a boxplot
