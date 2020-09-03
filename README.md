@@ -1,4 +1,4 @@
-# Automatic fundamental valuation.
+# Automatic fundamental valuation for investments.
 
 #### This project is for educational purposes and should not be used to guide any financial decisions.
 #### You must create a financialmodelingprep account and use your own api key to use this project.
