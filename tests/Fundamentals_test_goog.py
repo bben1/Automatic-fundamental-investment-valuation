@@ -1,4 +1,4 @@
-from keys.secrets import *
+
 from data.get_statements import get_statement
 from tools.fundamentals_class import Fundamentals 
 
@@ -14,7 +14,7 @@ import pandas_datareader.data as web
 import datetime
 from pandas.util.testing import assert_frame_equal
 
-def test(ticker, earnings_growth_rate, cap_ex_growth_rate, perpetual_growth_rate, confidence_intervals, bound):
+def test(ticker, earnings_growth_rate, cap_ex_growth_rate, perpetual_growth_rate, confidence_intervals, bound, api):
     
     #get the statements
     inc = get_statement(company_ticker = ticker,
@@ -67,11 +67,14 @@ def test(ticker, earnings_growth_rate, cap_ex_growth_rate, perpetual_growth_rate
     company.f_score()
     
 if __name__ == '__main__':
-    #I got the values for the growth rates from research, I need to implement the functionality to find this automatically.
+    
+    api_key = #your financialmodelingprep api key
     test(ticker = 'GOOG', 
          earnings_growth_rate = 0.15, 
          cap_ex_growth_rate = 0.5, 
          perpetual_growth_rate = 0.2,
          confidence_intervals = [0.95, 0.9, 0.85, 0.8, 0.75, 0.7],
-         bound = 0.3)
+         bound = 0.3, 
+         api = api_key)
+         #I got the values for the growth rates from research, I need to implement the functionality to find this automatically.
     
