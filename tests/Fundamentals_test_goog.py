@@ -1,6 +1,6 @@
 from keys.secrets import *
 from data.get_statements import get_statement
-from tools.Fundamentals_class import Fundamentals 
+from tools.fundamentals_class import Fundamentals 
 
 import requests
 import pandas as pd 
