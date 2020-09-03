@@ -10,7 +10,7 @@ import pandas_datareader.data as web
 import datetime
 from pandas.util.testing import assert_frame_equal
 
-class DCF:
+class Fundamentals:
     
     def __init__(self, income_statement, balance_sheet_statement, balance_sheet_statement_quarterly, cash_flow_statement, enterprise_value, financial_ratios, company_ticker, forecasting_period, api_key):
         """
@@ -38,7 +38,7 @@ class DCF:
         self.forecasting_period = forecasting_period
         self._api_key = api_key
     
-    def get_interest_coverage_and_risk_free_rate(self):
+    def _get_interest_coverage_and_risk_free_rate(self):
         """
         Summary:
         Calculates the interest-coverage-ratio and risk-free-rate of the company.
@@ -64,7 +64,7 @@ class DCF:
         print(f"Interest coverage ratio: {round(self.interest_coverage_ratio,4)}")
         print(f"Risk free rate: {round(self.risk_free_rate,4)}")
         
-    def get_cost_of_debt(self):
+    def _get_cost_of_debt(self):
         """
         Summary:
         calculates the cost of debt of the company using the credit-rating method.
@@ -126,7 +126,7 @@ class DCF:
         
         print(f"Cost of debt: {round(self.cost_of_debt,4)}")
     
-    def get_costofequity(self):
+    def _get_cost_of_equity(self):
         """
         Summary:
         calculates the CAPM of a company.
@@ -152,7 +152,7 @@ class DCF:
         
         print(f"CAPM: {round(self.capm,4)}")
     
-    def get_wacc(self):
+    def _get_wacc(self):
         """
         Summary:
         Calculates the weighted-average-cost-of-capital (WACC)
@@ -176,7 +176,7 @@ class DCF:
         
         print(f"WACC: {round(self.wacc,4)}")
     
-    def get_enterprise_value(self, earnings_growth_rate, cap_ex_growth_rate, perpetual_growth_rate):
+    def _get_enterprise_value(self, earnings_growth_rate, cap_ex_growth_rate, perpetual_growth_rate):
         """
         Summary:
         Calculates the enterprise value of the company.
@@ -234,7 +234,7 @@ class DCF:
         
         print(f"Enterprise_value: {round(self.enterprise_value,4)}")
     
-    def get_equity_value(self):
+    def _get_equity_value(self):
         """
         Summary:
         calculates the instrinsic value of a company.
@@ -253,6 +253,29 @@ class DCF:
 
         return {'equity value':self.equity_value, 
                 'share_price':round(self.share_price,4)}
+    
+    def dcf(self, earnings_growth_rate, cap_ex_growth_rate, perpetual_growth_rate):	
+        """	
+        Summary:	
+        Performs a two-stage DCF calculation.	
+        Inputs:	
+        earnings_growth_rate:	
+        cap_ex_growth_rate:	
+        perpetual_growth_rate:	
+        Returns:	
+        DCF parameters	
+        Enterprise Value	
+        {'equity value':float, 'share price':float}	
+        """	
+        print("***********************************************\n")	
+        print("DCF Calculation:\n")	
+        self._get_interest_coverage_and_risk_free_rate()	
+        self._get_cost_of_debt()	
+        self._get_cost_of_equity()	
+        self._get_wacc()	
+        self._get_enterprise_value(earnings_growth_rate, cap_ex_growth_rate, perpetual_growth_rate)	
+        self._get_equity_value()	
+        return
     
     def sensitivity(self, confidence_intervals = 0.9, bound = 0.4, plot=True):
         """
@@ -358,5 +381,139 @@ class DCF:
         print("***********************************************\n")
         
         return ev_piv
+  
+  def f_score(self):
+        """
+        Summary: Calculates f1-score based on 9 financial conditions.
+        
+        Returns:
+        dict containing the results.
+        """
+        f1_score = 0
+        profitability_score = 0
+        leverage_liquidity_score = 0
+        operating_efficiency_score = 0
+        
+        print("f-score results:\n")
+
+        #profitability conditions
+        
+        #1) Return on Assets (1 point if it is positive in the current year, 0 otherwise)
+        roa = float(self.fr['ratios'][0]['profitabilityIndicatorRatios']['returnOnAssets'])
+        print(f"P1(return_on_assets > 0): {roa}")
+        
+        #2) Operating Cash Flow (1 point if it is positive in the current year, 0 otherwise)
+        opcfps = float(self.fr['ratios'][0]['cashFlowIndicatorRatios']['operatingCashFlowPerShare'])
+        print(f"P2(opCF > 0): {opcfps}")
+        
+        #3) Change in Return of Assets (ROA) (1 point if ROA is higher in the current year compared to the previous one, 0 otherwise)
+        roa_this_year = float(self.fr['ratios'][0]['profitabilityIndicatorRatios']['returnOnAssets'])
+        roa_last_year = float(self.fr['ratios'][1]['profitabilityIndicatorRatios']['returnOnAssets'])
+        roa_change = roa_this_year - roa_last_year
+        print(f"P3(return_on_assets_change > 0): {roa_change}")
+        
+        #4) Accruals (1 point if Operating Cash Flow/Total Assets is higher than ROA in the current year, 0 otherwise)
+        op_ta = float(self.cf[0]['operatingCashFlow'] / self.bs[0]['totalAssets'])
+        print(f"P4(opCF/totalAssets > return_on_assets): {(op_ta, roa)}")
+        
+        #Leverage, liquidity and source of funds conditions
+        
+        #5) Change in Leverage (long-term) ratio (1 point if the ratio is lower this year compared to the previous one, 0 otherwise)
+        ltd_this_year = float(self.bs[0]['longTermDebt']/self.bs[0]['totalDebt'])
+        ltd_last_year = float(self.bs[1]['longTermDebt']/self.bs[1]['totalDebt'])
+        ltd_change = ltd_this_year - ltd_last_year
+        print(f"LL5(long_term_leverage_change < 0): {ltd_change}")
+        
+        #6) Change in Current ratio (1 point if it is higher in the current year compared to the previous one, 0 otherwise)
+        cur_this_year = float(self.bs[0]['totalCurrentAssets']/self.bs[0]['totalCurrentLiabilities'])
+        cur_last_year = float(self.bs[1]['totalCurrentAssets']/self.bs[1]['totalCurrentLiabilities'])
+        cur_change = cur_this_year - cur_last_year
+        print(f"LL6(current_ratio_change > 0): {cur_change}")
+        
+        #7) Change in the number of shares (1 point if no new shares were issued during the last year)
+        shares_this_year = float(self.inc[0]['weightedAverageShsOutDil'])
+        shares_last_year = float(self.inc[1]['weightedAverageShsOutDil'])
+        shares_change = shares_this_year - shares_last_year
+        print(f"LL7(number_of_shares_change == 0): {shares_change}")
+        
+        # Operating efficiency conditions
+        
+        #8) Change in Gross Margin (1 point if it is higher in the current year compared to the previous one, 0 otherwise)
+        gm_this_year = float(self.fr['ratios'][0]['profitabilityIndicatorRatios']['returnOnAssets'])
+        gm_last_year = float(self.fr['ratios'][1]['profitabilityIndicatorRatios']['returnOnAssets'])
+        gm_change = gm_this_year - gm_last_year
+        print(f"OE8(gross_margin_change > 0): {gm_change}")
+        
+        #9) Change in Asset Turnover ratio (1 point if it is higher in the current year compared to the previous one, 0 otherwise)
+        at_this_year = float(self.fr['ratios'][0]['operatingPerformanceRatios']['assetTurnover'])
+        at_last_year = float(self.fr['ratios'][1]['operatingPerformanceRatios']['assetTurnover'])
+        at_change = at_this_year - at_last_year
+        print(f"OE9(asset_turnover_ratio_change > 0): {at_change}")
+        
+        print("\n******************************************************\n")
+        
+        conditions = {'profitability':{
+                                      'profitability1':(roa>0),
+                                      'profitability2':(opcfps>0),
+                                      'profitability3':(roa_change>0),
+                                      'profitability4':(op_ta>roa_this_year)
+                                      },
+                      'leverage_and_liquidity':{
+                                                'leverage_liquidity1':(ltd_change<0),
+                                                'leverage_liquidity2':(cur_change>0),
+                                                'leverage_liquidity3':(shares_change==0)
+                                               },
+                      'operational_efficiency':{
+                                                'operational_efficiency_1':(gm_change>0),
+                                                'operational_efficiency_2':(at_change>0)}
+                                               }
+        
+        print("f-score conditions satisifed:\n")
+        for i in conditions.keys():
+            
+            for j in conditions[i].keys():
+                print(f"{j}: {conditions[i][j]}")
+                
+                
+                if (conditions[i][j]) & (i == 'profitability'):
+                   
+                    f1_score += 1
+                    profitability_score += 1
+                
+                elif (conditions[i][j]) & (i == 'leverage_and_liquidity'):
+                    
+                    f1_score += 1
+                    leverage_liquidity_score += 1
+                    
+                elif (conditions[i][j]) & (i == 'operational_efficiency'):
+                    
+                    f1_score += 1
+                    operating_efficiency_score += 1
+              
+                else:
+                    pass
+        
+        f1_performance = round((f1_score/9)*100,4)
+        profitability_performance = round((profitability_score/4)*100,4)
+        leverage_liquidity_performance = round((leverage_liquidity_score/3)*100,4)
+        operating_efficiency_performance = round((operating_efficiency_score/2)*100,4)
+        
+        print("\n******************************************************\n")
+        
+        print("f-score results summary:")
+        
+        results = {'F1-Score':f1_score, 
+                'F1-performance':str(f1_performance)+'%',
+                'Profitability-score':profitability_score,
+                'Profitability-performance':str(profitability_performance)+'%',
+                'leverage-liquidity-score':leverage_liquidity_score,
+                'leverage-liquidity-performance':str(leverage_liquidity_performance)+'%',
+                'operating-efficiency-score':operating_efficiency_score,
+                'operating-efficiency-performance':str(operating_efficiency_performance)+'%'
+               }
+        
+        print(results)
+              
+        return
               
         
