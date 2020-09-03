@@ -6,6 +6,74 @@
 
 A DCF tool that automatically performs the DCF calculation and sensitivity analysis for a company. A Piotroski tool that automatically assigns an F1-Score to a company. All financial data collected via the financialmodelingprep API.
 
+## Test example:
+
+If we want to conduct a **DCF analysis** of Google (GOOG) using this project, we would perform the following steps (see test.py for more information):
+
+# ![](images/test_sc_1.png)
+
+ - Use the get_statements() function to access the fundamental financial data in JSON format, using the financialmodelingprep API.
+ 
+    - company_name: (str) ticker of the company of which we wish to perform the financial analysis.
+    
+    - statement_name: (str) One of the following: 'income-statement', 'balance-sheet-statement', 'cash-flow-statement', 'enterprise-value', 'financial-ratios'
+    
+    - api_key: (str) api_key provided by financialmodelingprep to access your account.
+    
+    - frequency: (str) 'quarterly', 'annual'
+    
+ - Instantiate the DCF object by using these statements as arguments:
+ 
+    - income_statement: (json)
+    
+    - balance_sheet_statement: (json)
+    
+    - balance_sheet_statement_quarterly: (json)
+    
+    - cash_flow_statement: (json)
+    
+    - enterprise_value: (json)
+    
+    - financial_ratios: (json)
+    
+    - company_ticker: (str)
+    
+    - forecasting_period: (int)
+    
+    - api_key: (str)
+    
+ - Run the .dcf() method:
+ 
+    - earnings_growth_rate: (float) expected growth rate of earnings throughout forecast-period.
+    
+    - cap_ex_growth_rate: (float) expected growth rate of earnings throughout forecast-period.
+    
+    - perpetual_growth_rate: (float) expected long-term growth rate of free-cash-flow.
+    
+    - confidence_intervals: (list/float) A list of all of the confidence intervals at which to perform the sensitivity analysis.
+    
+    - bound: (float) Determines the range of WACC and g values. (0 < bound < 1)
+    
+    - This will return a summary of the DCF calculation as well as the results.
+    
+    # ![](images/test_sc_2.png)
+    
+ - Run the .sensitivity() method:
+    
+    - plot: (str) 'dist' returns a distplot, 'heat' returns a heatmap.
+    
+    - This will return a sensitivity analyis summary: results and plots showing the distribution of implied share price for variation in WACC and g.
+    
+    # ![](images/test_sc_3.png)
+    
+    # ![](images/test_sc_4.png)
+    
+ - Run the .f_score() method:
+ 
+    - This will return the results and a summary of Piotroski f_score analysis.
+    
+    # ![](images/test_sc_5.png)
+
 ## Motivations/Intentions:
 
 I have two main motivations behind this project:
@@ -14,7 +82,7 @@ I have two main motivations behind this project:
 
 2)	Learn about the challenges faced when applying financial practises in a technological context.
 
-I decided to format both of the tools as classes because for the following reasons:
+I decided to implement the tools in class format for the following reasons:
 
 -	Easily integrate these tools with other projects, such as the portfolio optimisation bot.
 
@@ -101,62 +169,6 @@ To use this project you will need to make a financialmodelingprep account in ord
 - matplotlib
 
 - financialmodelingprep
-
-## Example:
-
-If we want to conduct a **DCF analysis** of Google (GOOG) using this project, we would perform the following steps:
-
- - Use the get_statements() function to access the fundamental financial data in JSON format, using the financialmodelingprep API.
- 
-    - company_name: (str) ticker of the company of which we wish to perform the financial analysis.
-    
-    - statement_name: (str) One of the following: 'income-statement', 'balance-sheet-statement', 'cash-flow-statement', 'enterprise-value', 'financial-ratios'
-    
-    - api_key: (str) api_key provided by financialmodelingprep to access your account.
-    
-    - frequency: (str) 'quarterly', 'annual'
-    
- - Instantiate the DCF object by using these statements as arguments:
- 
-    - income_statement: (json)
-    
-    - balance_sheet_statement: (json)
-    
-    - balance_sheet_statement_quarterly: (json)
-    
-    - cash_flow_statement: (json)
-    
-    - enterprise_value: (json)
-    
-    - financial_ratios: (json)
-    
-    - company_ticker: (str)
-    
-    - forecasting_period: (int)
-    
-    - api_key: (str)
-    
- - Run the .dcf() method:
- 
-    - earnings_growth_rate: (float) expected growth rate of earnings throughout forecast-period.
-    
-    - cap_ex_growth_rate: (float) expected growth rate of earnings throughout forecast-period.
-    
-    - perpetual_growth_rate: (float) expected long-term growth rate of free-cash-flow.
-    
-    - confidence_intervals: (list/float) A list of all of the confidence intervals at which to perform the sensitivity analysis.
-    
-    - bound: (float) Determines the range of WACC and g values. (0 < bound < 1)
-    
- - Run the .sensitivity() method:
-    
-    - plot: (str) 'dist' returns a distplot, 'heat' returns a heatmap.
-    
-    - This will return a plot showing the distribution of implied share price for variation in WACC and g.
-    
- - Run the .f_score() method:
- 
-    - This will return the results and a summary of Piotroski f_score analysis.
 
 ## Challenges:
 
