@@ -8,7 +8,7 @@ A DCF tool that automatically performs the DCF calculation and sensitivity analy
 
 ## Test example:
 
-If we want to conduct a **DCF analysis** of Google (GOOG) using this project, we would perform the following steps (see test.py for more information):
+If we want to conduct a **DCF analysis** of Google (GOOG) using this project, we would perform the following steps (see Fundamentals_test_goog.py for more information):
 
 # ![](images/test_sc_1.png)
 
