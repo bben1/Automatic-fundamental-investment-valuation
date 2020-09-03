@@ -136,47 +136,27 @@ If we want to conduct a **DCF analysis** of Google (GOOG) using this project, we
     
     - api_key: (str)
     
- - Run the .get_interest_coverage_and_risk_free_rate() method:
+ - Run the .dcf() method:
  
- - Run the .get_cost_of_debt() method:
- 
- - Run the .get_cost_of_equity() method:
- 
- - Run the .get_enterprise_value() method:
- 
-    - earnings_growth_rate: (float) projected earnings growth rate throughout the forecasting period.
+    - earnings_growth_rate: (float) expected growth rate of earnings throughout forecast-period.
     
-    - capex_growth_rate: (float) projected capital expenditure growth rate throughout the forecasting period.
+    - cap_ex_growth_rate: (float) expected growth rate of earnings throughout forecast-period.
     
-    - perpetual_growth_rate: (float) projected perpetual growth rate.
-  
-  - Run the .get_equity_value() method:
-  
-    - This will return a dictionary containing the intrinsic equity value and instrinsic value per share.
+    - perpetual_growth_rate: (float) expected long-term growth rate of free-cash-flow.
     
-  - Run the .sensitivity() method:
+    - confidence_intervals: (list/float) A list of all of the confidence intervals at which to perform the sensitivity analysis.
+    
+    - bound: (float) Determines the range of WACC and g values. (0 < bound < 1)
+    
+ - Run the .sensitivity() method:
     
     - plot: (str) 'dist' returns a distplot, 'heat' returns a heatmap.
     
     - This will return a plot showing the distribution of implied share price for variation in WACC and g.
     
-If we want to conduct a **Piotroski F-score analysis** of Google (GOOG) using this project, we will perform the following steps:
-
-    - Retrieve the financial statements using the get_statements() function as described above.
-    
-    - Instantiate the Piotroski class:
-        
-        - income_statement: (json)
-        
-        - balance_sheet_statement: (json)
-        
-        - cash_flow_statement: (json)
-        
-        - financial_ratios: (json)
-        
-    - Run the .f_score() method:
-    
-        - This returns a summary of the analysis as well as the company's f-score.
+ - Run the .f_score() method:
+ 
+    - This will return the results and a summary of Piotroski f_score analysis.
 
 ## Challenges:
 
