@@ -1,14 +1,16 @@
-# AutomaticFundamentalsAnalysis
+# Automatic fundamental valuation.
 
 #### This project is for educational purposes and should not be used to guide any financial decisions.
+#### You must create a financialmodelingprep account and use your own api key to use this project.
+##### (*They offer a free version with a maximum of 250 API calls*)
 
 ## Project summary:
 
-A DCF tool that automatically performs the DCF calculation and sensitivity analysis for a company. A Piotroski tool that automatically assigns an F1-Score to a company. All financial data collected via the financialmodelingprep API.
+A fundamentals class that passes company financial data and produces a **DCF valuation** and **f-score analysis**. Data collected from financialmodelingprep API.
 
 ## Test example:
 
-If we want to conduct a **DCF analysis** of Google (GOOG) using this project, we would perform the following steps (see Fundamentals_test_goog.py for more information):
+If we want to conduct a **DCF analysis** of Google (GOOG) using this project, we would perform the following steps (*see Fundamentals_test_goog.py for more information*):
 
 # ![](images/test_sc_1.png)
 
